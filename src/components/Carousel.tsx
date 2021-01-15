@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Blurhash} from 'react-blurhash'
 import {Container, Row, Col} from 'react-bootstrap'
 
@@ -21,15 +21,19 @@ interface Props {
 }
 
 export const Carousel:React.FC<Props> = ({section}) => {
+
+    const [restaurants, setRestaurants] = useState(section.restaurants)
+
     return (
         <div>
             <p>{section.title}</p>
             <Container>
                 <Row className='justify-content-around'>
-                    {section.restaurants.map(restaurant => {
+                    {restaurants.slice(0, Math.min(restaurants.length, 5))
+                    .map(restaurant => {
                         return (
 
-                        <Col xs={6} sm={4} md={2}>
+                        <Col xs={6} sm={4} md={2} key={restaurant.name}>
                             <Blurhash
                             hash={restaurant.blurhash}
                             width={200}
@@ -43,6 +47,9 @@ export const Carousel:React.FC<Props> = ({section}) => {
 
                         </Col>)
                     })}
+                    {restaurants.length>5?
+                    <button onClick={() => setRestaurants([...restaurants.slice(1, 6), restaurants[0]])}>Next</button>
+                    :null }
                 </Row>
             </Container>
         </div>
