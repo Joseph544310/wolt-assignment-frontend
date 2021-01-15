@@ -2,6 +2,7 @@ import React from 'react';
 import '../css/App.css';
 import data from '../discovery_page.json'
 import {Carousel} from './Carousel'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
