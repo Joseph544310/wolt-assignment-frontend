@@ -24,22 +24,24 @@ interface Props {
 
 export const Carousel:React.FC<Props> = ({section}) => {
 
+    const convertWidthToItemsPerLine = (width:number) :number=> {
+        if (width < 767) return 1;
+        else if(width < 991) return 2;
+        else if (width < 1199) return 4;
+        return 5;
+    }
+
     useEffect( () => {
-        const width = window.innerWidth
-        if (width < 600) {
-            setItemsPerLine(2)
-        }
-        else if(width<900) {
-            setItemsPerLine(3)
-        }
-        else {
-            setItemsPerLine(5)
-        }
+
+        const handleWindowResize = () => setItemsPerLine(convertWidthToItemsPerLine(window.innerWidth))
+        window.addEventListener("resize", handleWindowResize);
+
+        return () => window.removeEventListener("resize", handleWindowResize);
 
     }, [])
 
     const [restaurants, setRestaurants] = useState(section.restaurants)
-    const [itemsPerLine, setItemsPerLine] = useState(2)
+    const [itemsPerLine, setItemsPerLine] = useState(convertWidthToItemsPerLine(window.innerWidth))
 
     return (
         <div>
@@ -50,11 +52,11 @@ export const Carousel:React.FC<Props> = ({section}) => {
                     .map(restaurant => {
                         return (
 
-                        <Col xs={6} sm={4} md={2} key={restaurant.name}>
+                        <Col xs={10} sm={5} md={2} key={restaurant.name} className='restaurant-card'>
                             <Blurhash
                             hash={restaurant.blurhash}
                             width={200}
-                            height={150}
+                            height={130}
                             resolutionX={32}
                             resolutionY={32}
                             punch={1}
@@ -64,12 +66,16 @@ export const Carousel:React.FC<Props> = ({section}) => {
 
                         </Col>)
                     })}
-                    {restaurants.length>5?
-                    <FaAngleRight
-                     onClick={() => setRestaurants([...restaurants.slice(1), restaurants[0]])}
-                     className='next-icon'
-                     />
-                    :null }
+                    
+                    <Col xs={2} sm={1}>
+                        {restaurants.length>5?
+                        <FaAngleRight
+                        onClick={() => setRestaurants([...restaurants.slice(1), restaurants[0]])}
+                        className='next-icon'
+                        />
+                        :null }
+                    </Col>
+
                 </Row>
             </Container>
         </div>
