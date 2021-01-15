@@ -1,6 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Blurhash} from 'react-blurhash'
+import {FaAngleRight} from 'react-icons/fa'
 import {Container, Row, Col} from 'react-bootstrap'
+import '../css/Carousel.css'
 
 interface Restaurant {
     blurhash: string,
@@ -22,14 +24,29 @@ interface Props {
 
 export const Carousel:React.FC<Props> = ({section}) => {
 
+    useEffect( () => {
+        const width = window.innerWidth
+        if (width < 600) {
+            setItemsPerLine(2)
+        }
+        else if(width<900) {
+            setItemsPerLine(3)
+        }
+        else {
+            setItemsPerLine(5)
+        }
+
+    }, [])
+
     const [restaurants, setRestaurants] = useState(section.restaurants)
+    const [itemsPerLine, setItemsPerLine] = useState(2)
 
     return (
         <div>
             <p>{section.title}</p>
             <Container>
                 <Row className='justify-content-around'>
-                    {restaurants.slice(0, Math.min(restaurants.length, 5))
+                    {restaurants.slice(0, Math.min(restaurants.length, itemsPerLine))
                     .map(restaurant => {
                         return (
 
@@ -48,7 +65,10 @@ export const Carousel:React.FC<Props> = ({section}) => {
                         </Col>)
                     })}
                     {restaurants.length>5?
-                    <button onClick={() => setRestaurants([...restaurants.slice(1, 6), restaurants[0]])}>Next</button>
+                    <FaAngleRight
+                     onClick={() => setRestaurants([...restaurants.slice(1), restaurants[0]])}
+                     className='next-icon'
+                     />
                     :null }
                 </Row>
             </Container>
