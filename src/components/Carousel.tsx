@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface Restaurent {
+interface Restaurant {
     blurhash: string,
     launch_date: string,
     location: Array<number>,
@@ -11,7 +11,7 @@ interface Restaurent {
 
 interface Section {
     title: string,
-    restaurents: Array<Restaurent>
+    restaurants: Array<Restaurant>
 }
 
 interface Props {
