@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="App">
       {data.sections.map(section => 
-      <div className='restaurant-section'>
-        <Carousel key={section.title} section={section}/>
+      <div className='restaurant-section' data-testid='carousel' key={section.title} >
+        <Carousel section={section}/>
       </div>) }
     </div>
   );

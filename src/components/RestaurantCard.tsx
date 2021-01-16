@@ -22,14 +22,17 @@ export const RestaurantCard:React.FC<Props> = ({restaurant}) => {
         <Col xs={7} sm={5} md={2} className='restaurant-card'>
             <Blurhash
             className='restaurant-image'
+            data-testid='restaurant-blurhash'
             hash={restaurant.blurhash}
             width={200}
             height={130}
             resolutionX={32}
             resolutionY={32}
             punch={1}/>
-            <p className={restaurant.online?'online':'offline'}>{restaurant.online?'Online':'Offline'}</p>
-            <p>{restaurant.name}</p>
+            <p className={restaurant.online?'online':'offline'} data-testid='online-status'>
+                {restaurant.online?'Online':'Offline'}
+            </p>
+            <p data-testid='restaurant-name'>{restaurant.name}</p>
         </Col>
     );
 }

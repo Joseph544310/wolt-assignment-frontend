@@ -50,7 +50,8 @@ export const Carousel:React.FC<Props> = ({section}) => {
                     {restaurants.length>itemsPerLine?
                     <FaAngleLeft
                     onClick={() => setRestaurants([restaurants[restaurants.length - 1], ...restaurants.slice(0, restaurants.length - 1)])}
-                    className='next-icon'
+                    className='scroll-icon'
+                    data-testid='scroll-left'
                     />
                     :null }
                 </Col>  
@@ -59,7 +60,8 @@ export const Carousel:React.FC<Props> = ({section}) => {
                     {restaurants.length>itemsPerLine?
                     <FaAngleRight
                     onClick={() => setRestaurants([...restaurants.slice(1), restaurants[0]])}
-                    className='next-icon'
+                    className='scroll-icon'
+                    data-testid='scroll-right'
                     />
                     :null }
                 </Col>

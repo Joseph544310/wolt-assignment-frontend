@@ -1,9 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from '../components/App';
+import data from '../discovery_page.json'
 
-test('renders learn react link', () => {
+test('renders all sections', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const carousels = screen.getAllByTestId('carousel')
+  expect(carousels.length).toEqual(data.sections.length);
 });
