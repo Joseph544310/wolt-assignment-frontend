@@ -69,7 +69,7 @@ export const Carousel:React.FC<Props> = ({section}) => {
             <Row className='justify-content-around'>
                 {restaurants.slice(0, Math.min(restaurants.length, itemsPerLine))
                 .map(restaurant => 
-                <RestaurantCard restaurant={restaurant} key={restaurant.name}/>
+                <RestaurantCard data-testid='restaurants' restaurant={restaurant} key={restaurant.name}/>
                 )}
             </Row>
         </Container>
