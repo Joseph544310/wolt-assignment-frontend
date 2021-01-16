@@ -7,8 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
     <div className="App">
-      <p>hello</p>
-      {data.sections.map(section => <Carousel section={section}/>)}
+      {data.sections.map(section => 
+      <div className='restaurant-section'>
+        <Carousel key={section.title} section={section}/>
+      </div>) }
     </div>
   );
 }

@@ -45,36 +45,37 @@ export const Carousel:React.FC<Props> = ({section}) => {
 
     return (
         <div>
-            <p>{section.title}</p>
             <Container>
-                <Row className='justify-content-around'>
-                    {restaurants.slice(0, Math.min(restaurants.length, itemsPerLine))
-                    .map(restaurant => {
-                        return (
-
-                        <Col xs={10} sm={5} md={2} key={restaurant.name} className='restaurant-card'>
-                            <Blurhash
-                            hash={restaurant.blurhash}
-                            width={200}
-                            height={130}
-                            resolutionX={32}
-                            resolutionY={32}
-                            punch={1}
-                        />
-                        <p>{restaurant.online?'Online':'Offline'}</p>
-                        <p>{restaurant.name}</p>
-
-                        </Col>)
-                    })}
-                    
-                    <Col xs={2} sm={1}>
-                        {restaurants.length>5?
+                <Row>
+                    <Col xs={2}></Col>
+                    <Col xs={8}><h1>{section.title}</h1></Col>
+                    <Col xs={2}>
+                        {restaurants.length>itemsPerLine?
                         <FaAngleRight
                         onClick={() => setRestaurants([...restaurants.slice(1), restaurants[0]])}
                         className='next-icon'
                         />
                         :null }
                     </Col>
+                </Row>
+                <Row className='justify-content-around'>
+                    {restaurants.slice(0, Math.min(restaurants.length, itemsPerLine))
+                    .map(restaurant => {
+                        return (
+
+                        <Col xs={7} sm={5} md={2} key={restaurant.name} className='restaurant-card'>
+                            <Blurhash
+                            className='restaurant-image'
+                            hash={restaurant.blurhash}
+                            width={200}
+                            height={130}
+                            resolutionX={32}
+                            resolutionY={32}
+                            punch={1}/>
+                            <p className={restaurant.online?'online':'offline'}>{restaurant.online?'Online':'Offline'}</p>
+                            <p>{restaurant.name}</p>
+                        </Col>)
+                    })}
 
                 </Row>
             </Container>
