@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import {Blurhash} from 'react-blurhash'
-import {FaAngleRight} from 'react-icons/fa'
+import {FaAngleRight, FaAngleLeft} from 'react-icons/fa'
 import {Container, Row, Col} from 'react-bootstrap'
+import {RestaurantCard} from './RestaurantCard'
 import '../css/Carousel.css'
 
 interface Restaurant {
@@ -44,41 +44,32 @@ export const Carousel:React.FC<Props> = ({section}) => {
     const [itemsPerLine, setItemsPerLine] = useState(convertWidthToItemsPerLine(window.innerWidth))
 
     return (
-        <div>
-            <Container>
-                <Row>
-                    <Col xs={2}></Col>
-                    <Col xs={8}><h1>{section.title}</h1></Col>
-                    <Col xs={2}>
-                        {restaurants.length>itemsPerLine?
-                        <FaAngleRight
-                        onClick={() => setRestaurants([...restaurants.slice(1), restaurants[0]])}
-                        className='next-icon'
-                        />
-                        :null }
-                    </Col>
-                </Row>
-                <Row className='justify-content-around'>
-                    {restaurants.slice(0, Math.min(restaurants.length, itemsPerLine))
-                    .map(restaurant => {
-                        return (
-
-                        <Col xs={7} sm={5} md={2} key={restaurant.name} className='restaurant-card'>
-                            <Blurhash
-                            className='restaurant-image'
-                            hash={restaurant.blurhash}
-                            width={200}
-                            height={130}
-                            resolutionX={32}
-                            resolutionY={32}
-                            punch={1}/>
-                            <p className={restaurant.online?'online':'offline'}>{restaurant.online?'Online':'Offline'}</p>
-                            <p>{restaurant.name}</p>
-                        </Col>)
-                    })}
-
-                </Row>
-            </Container>
-        </div>
+        <Container>
+            <Row>
+                <Col xs={2}>
+                    {restaurants.length>itemsPerLine?
+                    <FaAngleLeft
+                    onClick={() => setRestaurants([restaurants[restaurants.length - 1], ...restaurants.slice(0, restaurants.length - 1)])}
+                    className='next-icon'
+                    />
+                    :null }
+                </Col>  
+                <Col xs={8}><h1>{section.title}</h1></Col>
+                <Col xs={2}>
+                    {restaurants.length>itemsPerLine?
+                    <FaAngleRight
+                    onClick={() => setRestaurants([...restaurants.slice(1), restaurants[0]])}
+                    className='next-icon'
+                    />
+                    :null }
+                </Col>
+            </Row>
+            <Row className='justify-content-around'>
+                {restaurants.slice(0, Math.min(restaurants.length, itemsPerLine))
+                .map(restaurant => 
+                <RestaurantCard restaurant={restaurant} key={restaurant.name}/>
+                )}
+            </Row>
+        </Container>
     );
 }
